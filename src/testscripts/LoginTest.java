@@ -3,36 +3,25 @@
 package testscripts;
 
 import java.io.IOException;
-
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import base.ControlActions;
-import pages.LoginPage;
 import utility.ExcelOperations;
 
-public class LoginTest {
+public class LoginTest extends TestBase{
 
 	WebDriver driver;
-	LoginPage loginpage ;
-
-	@BeforeMethod
-	public void setup() {
-		ControlActions.launchBrower();
-		loginpage = new LoginPage();
-	}
-
+	
 	@Test
 	public void verifyLogin() {
-		loginpage.login("shrutikad905@gmail.com", "Shrutika@123");
+		loginpage.login("shrutikad905@gmail.com", "Shrutika@12");
 		boolean loginflag = loginpage.isLoginSuccessFullyDisplayed();
 		Assert.assertTrue(loginflag);
 	}
 	
+	@Test
 	public void verifyErrorMessages() {
 		System.out.println("STEP: Click on login button");
 		loginpage.clickOnLoginButton();
@@ -114,10 +103,5 @@ public class LoginTest {
 	@DataProvider(name="LoginDataProvider")
 	public Object[][] getLoginData() throws IOException{
 		return ExcelOperations.getAllRows(".\\testData\\LoginData.xlsx", "Login");
-	}
-	
-	@AfterMethod
-	public void tearDown() {
-		ControlActions.closeBrowser();
 	}
 }
